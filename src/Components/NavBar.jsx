@@ -1,7 +1,22 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const NavBar = () => {
+  const location = useLocation();
+
+  const handleDownload = () => {
+    const pdfUrl = "../assets/VidhiSaxena.pdf";
+    const link = document.createElement("a");
+    link.href = pdfUrl;
+    link.download = "VidhiSaxena.pdf";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
+  const isAboutOrProjects =
+    location.pathname === "/about" || location.pathname === "/projects";
+
   return (
     <header className="header">
       <NavLink
@@ -27,6 +42,14 @@ const NavBar = () => {
         >
           Projects
         </NavLink>
+        <div
+          className={`text-black cursor-pointer ${
+            isAboutOrProjects ? "hover:text-blue-500" : "hover:text-white"
+          }`}
+          onClick={handleDownload}
+        >
+          Resume
+        </div>
       </nav>
     </header>
   );
